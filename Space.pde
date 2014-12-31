@@ -58,19 +58,17 @@ class Space
  
  void drawStars()
  {
-   Iterator<Star> iterator = stars.iterator();
-   while(iterator.hasNext())
+   for (Star star : stars)
    {
-     iterator.next().draw(); 
-   }   
+     star.draw();
+   }  
  }
  
  void drawPlanets()
  {
-   Iterator<Planet> iterator = planets.iterator();
-   while(iterator.hasNext())
-   {
-     iterator.next().draw(); 
-   }   
+   for(Planet planet : planets) 
+   { 
+     planet.draw(); 
+   }  
  }  
 }

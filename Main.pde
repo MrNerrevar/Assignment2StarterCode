@@ -1,10 +1,10 @@
 /*
     DIT OOP Assignment 2 Starter Code
-    =================================
-    
-    Loads player properties from an xml file
-    See: https://github.com/skooter500/DT228-OOP 
-*/
+ =================================
+ 
+ Loads player properties from an xml file
+ See: https://github.com/skooter500/DT228-OOP 
+ */
 
 ArrayList<Player> players = new ArrayList<Player>();
 boolean[] keys = new boolean[526];
@@ -13,7 +13,8 @@ Space space = new Space(653928);
 
 void setup()
 {
-  size(1000, 800);
+  size(1000, 800, P2D);
+  smooth();
   space.generate();
   setUpPlayerControllers();
 }
@@ -21,8 +22,11 @@ void setup()
 void draw()
 {
   space.draw();
+
+  //stroke(0, 0, 255);
+  //ellipse(500, 300, width-50, height+130);
   
-  for(Player player:players)
+  for (Player player : players)
   {
     player.update();
     player.display();
@@ -64,25 +68,34 @@ char buttonNameToKey(XML xml, String buttonName)
     return DOWN;
   }
   //.. Others to follow
-  return value.charAt(0);  
+  return value.charAt(0);
 }
 
 void setUpPlayerControllers()
 {
+  color playerColour;
   XML xml = loadXML("arcade.xml");
   XML[] children = xml.getChildren("player");
   int gap = width / (children.length + 1);
-  
-  for(int i = 0 ; i < children.length ; i ++)  
+
+  for (int i = 0; i < children.length; i ++)  
   {
+    //Condition to define the player colour
+    if (i==0)
+    {
+      playerColour = color(0, 0, 250);
+    } else
+    {
+      playerColour = color(250, 0, 0);
+    }
+    
+    
     XML playerXML = children[i];
-    Player p = new Player(
-            i
-            , color(random(0, 255), random(0, 255), random(0, 255))
-            , playerXML);
+    Player p = new Player(i, playerColour, playerXML);
     int x = (i + 1) * gap;
     p.pos.x = x;
-    p.pos.y = 300;
-   players.add(p);         
+    p.pos.y = 400;
+    players.add(p);
   }
 }
+
