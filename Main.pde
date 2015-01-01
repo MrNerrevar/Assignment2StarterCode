@@ -8,13 +8,19 @@
 
 ArrayList<Player> players = new ArrayList<Player>();
 boolean[] keys = new boolean[526];
-ArrayList bullets = new ArrayList();
+ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 
 Space space = new Space(653928);
 
+int centX = width/2;
+int centY = height/2;
+float countInner = 0;
+float countOuter = 0;
+int x, y, z;
+
 void setup()
 {
-  size(1000, 800, P2D);
+  size(1000, 750, P2D);
   smooth();
   space.generate();
   setUpPlayerControllers();
@@ -23,6 +29,10 @@ void setup()
 void draw()
 {
   space.draw();
+  println(frameRate);
+  
+  outer_ring();
+  countOuter += 0.15;
 
   //stroke(0, 0, 255);
   //ellipse(500, 300, width-50, height+130);

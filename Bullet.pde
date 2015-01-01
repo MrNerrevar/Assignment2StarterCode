@@ -7,7 +7,10 @@ class Bullet
     y = ypos;
   }
 
-  void draw() {
+  void draw() 
+  {
+    fill(0, 250, 0);
+    stroke(0, 250, 0);
     ellipse(x, y, 2, 5);
     y -= 5;
   }
