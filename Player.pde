@@ -10,6 +10,8 @@ class Player
   char button2;
   int index;
   color colour;
+  boolean canShoot = true;
+  int shootDelay = 0;
 
   Player()
   {
@@ -66,13 +68,22 @@ class Player
     {
       println("Player " + index + " start");
     }
-    if (checkKey(button1))
+    if (checkKey(button1) && canShoot)
     {
       println("Player " + index + " button 1");
+      bullets.add(new Bullet(pos.x-4, pos.y-50));
+      canShoot = false;
+      shootDelay = 0;
     }
     if (checkKey(button2))
     {
       println("Player " + index + " button2");
+    }
+
+    shootDelay++;
+    if (shootDelay >= 10) 
+    {
+      canShoot = true;
     }
   }
 
@@ -80,8 +91,9 @@ class Player
   {    
     stroke(colour);
     fill(colour);    
-    
+
     PShape ship = createShape();
+
     ship.beginShape();
     ship.stroke(colour);
     ship.vertex(-2, 0);
@@ -108,6 +120,7 @@ class Player
     ship.vertex(18, 158);
     ship.vertex(18, 136);
     ship.vertex(20, 136);
+    ship.vertex(20, 138);
     ship.vertex(64, 128);
     ship.vertex(64, 100);
     ship.vertex(62, 100);
@@ -122,11 +135,12 @@ class Player
     ship.vertex(6, 18);
     ship.vertex(2, 0);
     ship.endShape(CLOSE);
-    
-    translate(pos.x, pos.y);
+
+    ship.translate(pos.x, pos.y-50);
+    ship.scale(0.5);
     shape(ship);
+
+    //rect(pos.x, pos.y, 20, 20);
   }
-  
-  
 }
 

@@ -8,6 +8,7 @@
 
 ArrayList<Player> players = new ArrayList<Player>();
 boolean[] keys = new boolean[526];
+ArrayList bullets = new ArrayList();
 
 Space space = new Space(653928);
 
@@ -25,11 +26,16 @@ void draw()
 
   //stroke(0, 0, 255);
   //ellipse(500, 300, width-50, height+130);
-  
+
   for (Player player : players)
   {
     player.update();
     player.display();
+  }
+
+  for (int i = 0; i < bullets.size (); i++) {
+    Bullet bullet = (Bullet) bullets.get(i);
+    bullet.draw();
   }
 }
 
@@ -67,6 +73,7 @@ char buttonNameToKey(XML xml, String buttonName)
   {
     return DOWN;
   }
+
   //.. Others to follow
   return value.charAt(0);
 }
@@ -88,8 +95,8 @@ void setUpPlayerControllers()
     {
       playerColour = color(250, 0, 0);
     }
-    
-    
+
+
     XML playerXML = children[i];
     Player p = new Player(i, playerColour, playerXML);
     int x = (i + 1) * gap;
