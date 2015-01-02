@@ -1,6 +1,5 @@
-class Player
+class Player extends Entity
 {
-  PVector pos;
   char up;
   char down;
   char left;
@@ -9,15 +8,13 @@ class Player
   char button1;
   char button2;
   int index;
-  color colour;
-  boolean canShoot = true;
   int shootDelay = 0;
   float angle = 0;
   PVector orbitPoint;
 
   Player()
   {
-    pos = new PVector(width / 2, height / 2);
+    //pos = new PVector(width / 2, height / 2);
   }
 
   Player(int index, color colour, char up, char down, char left, char right, char start, char button1, char button2)
@@ -58,19 +55,26 @@ class Player
 
   void update()
   {
-    if (checkKey(up))
+    boolean leftLimit; 
+    boolean rightLimit;
+
+    switch(index)
     {
-      pos.y -= 3;
+    case 0:
+      leftLimit = this.pos.y < (height/2)+70;
+      rightLimit = this.pos.y >= height-50;
+      break;
+    default:
+      rightLimit = this.pos.y < (height/2)+70;
+      leftLimit = this.pos.y >= height-50;
+      break;
     }
-    if (checkKey(down))
-    {
-      pos.y += 3;
-    }
-    if (checkKey(left) && this.pos.y >= height/2 && this.pos.y <= height-50)
+
+    if (checkKey(left) && !leftLimit)
     {
       angle = 0.01F;
     } 
-    else if (checkKey(right) && this.pos.y >= height/2 && this.pos.y <= height-50)
+    else if (checkKey(right) && !rightLimit)
     {
       angle = -0.01F;
     } 
@@ -80,18 +84,19 @@ class Player
     }
     if (checkKey(start))
     {
-      println("Player " + index + " start");
     }
     if (checkKey(button1) && canShoot)
     {
-      println("Player " + index + " button 1");  
-      bullets.add(new Bullet(pos.x-4, pos.y-25, getRawAngle(index)));
+      float angle = getRawAngle(index);
+      float xOffset = 4;
+      float yOffset = 25;
+
+      bullets.add(new Bullet(pos.x - xOffset, pos.y - yOffset, angle));
       canShoot = false;
       shootDelay = 0;
     }
     if (checkKey(button2))
     {
-      println("Player " + index + " button2");
     }
 
     shootDelay++;
@@ -102,17 +107,26 @@ class Player
 
     rotatePlayer(angle);
   }
-  
+
+  void rotatePlayer(float angle)
+  {
+    PVector orbitPointToOrigin = new PVector(-orbitPoint.x, -orbitPoint.y);
+    PVector PosPointToOrigin = PVector.add(pos, orbitPointToOrigin );
+    PosPointToOrigin .rotate(angle);
+    PosPointToOrigin .add(orbitPoint);
+    pos = PosPointToOrigin;
+  }
+
   float getAngle()
   {
     return getAngle(index);
   }
- 
+
   float getRawAngle(int i)
   {
     return (float) ( (Math.atan((enemySpawn.y - pos.y)/(enemySpawn.x - pos.x))) + i*Math.PI );
   }
- 
+
   float getAngle(int i)
   {
     switch(i)
@@ -125,26 +139,13 @@ class Player
     return 0;
   }
 
-  void rotatePlayer(float angle)
-  {
-    stroke(0, 250, 0);
-    ellipse(orbitPoint.x, orbitPoint.y, 10, 10);
-    PVector orbitPointToOrigin = new PVector(-orbitPoint.x, -orbitPoint.y);
-    PVector PosPointToOrigin = PVector.add(pos, orbitPointToOrigin );
-    PosPointToOrigin .rotate(angle);
-    PosPointToOrigin .add(orbitPoint);
-    pos = PosPointToOrigin;
-  }
-
   void display()
   {    
-    stroke(colour);
-    fill(colour);    
-
     PShape ship = createShape();
 
     ship.beginShape();
     ship.stroke(colour);
+    ship.fill(colour);
     ship.vertex(-2, 0);
     ship.vertex(-6, 18);
     ship.vertex(-12, 102);
@@ -189,8 +190,6 @@ class Player
     ship.scale(0.5);
     ship.rotate(getAngle());
     shape(ship);
-
-    //rect(pos.x, pos.y, 20, 20);
   }
 }
 

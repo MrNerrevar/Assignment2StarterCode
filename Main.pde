@@ -6,7 +6,7 @@
  See: https://github.com/skooter500/DT228-OOP 
  */
 
-ArrayList<Player> players = new ArrayList<Player>();
+ArrayList<Entity> players = new ArrayList<Entity>();
 boolean[] keys = new boolean[526];
 ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 PVector enemySpawn;
@@ -25,20 +25,35 @@ void setup()
 void draw()
 {
   space.draw();
+  
   println(frameRate);
   
-  //stroke(0, 255, 0);  
-  //ellipse(width/2, (height/2)-300, 5, 5);   //Shows enemy spawn point
+  if(frameRate > 55)
+  {  
+    space.update();
+  }
 
-  for (Player player : players)
+  //stroke(0, 0, 255);
+  //ellipse(500, 300, width-50, height+130);
+
+  for (Entity player : players)
   {
     player.update();
     player.display();
   }
 
-  for (int i = 0; i < bullets.size (); i++) {
-    Bullet bullet = (Bullet) bullets.get(i);
-    bullet.draw();
+  Iterator<Bullet> iterator = bullets.iterator();
+  while(iterator.hasNext())
+  {    
+    Bullet b = iterator.next();
+    if(b.isOnScreen())
+    {
+      b.draw();
+    }
+    else
+    {
+      iterator.remove();
+    } 
   }
 }
 

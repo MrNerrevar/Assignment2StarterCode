@@ -1,48 +1,33 @@
-class Planet
+class Planet extends SpaceBody
 {
-  int x;
-  int y;
-  int size;
-  color colour;
+  PVector orbitPoint;
+  float angle;
+  boolean hasOrbit;
 
-  Planet(int i, int j, int s, color colour)
+  Planet(int i, int j, int s, color colour, int orbitX, int orbitY, float angle, boolean hasOrbit)
   {
-    this.x = i;
-    this.y = j; 
-    this.size = s;
-    this.colour = colour;
-  }
-
-  int getX()
-  {
-    return this.x;
-  }
-
-  int getY()
-  {
-    return this.y;
-  }
-
-  int getSize()
-  {
-    return this.size;
-  }
-
-  void setX(int i)
-  {
-    this.x = i;
-  }
-
-  void setY(int i)
-  {
-    this.y = i;
+    super(new PVector(i, j), s, colour);
+    this.orbitPoint = new PVector(orbitX, orbitY);
+    this.angle = angle;
+    this.hasOrbit = hasOrbit;
   }
 
   void draw()
   {
-    fill(colour);
-    stroke(colour);     
-    ellipse(x, y, size, size);
+    super.draw();   
+    ellipse(pos.x, pos.y, size, size);
+  }
+
+  void update()
+  {
+    if (hasOrbit)
+    {
+      PVector tempPoint = new PVector(-orbitPoint.x, -orbitPoint.y);
+      PVector tempPosPoint = PVector.add(pos, tempPoint);
+      tempPosPoint.rotate(angle);
+      tempPosPoint.add(orbitPoint);
+      pos = tempPosPoint;
+    }
   }
 }
 

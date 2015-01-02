@@ -6,25 +6,23 @@ import java.util.Iterator;
 class Space
 {
   int seed;
-  List<Star> stars;
-  List<Planet> planets;
+  List<SpaceBody> bodies;
 
-  int START = 20;
+  int START = 40;
   int SPREAD = 80;
-  int PLANETS = 10;
+  int PLANETS = 15;
+  int TWINKLE = 300;
+  int ASTEROIDS = 1;
 
   Space()
   {
-    this.seed = 15;
-    this.stars = new ArrayList<Star>();
-    this.planets = new ArrayList<Planet>();
+    this(15);
   }
 
   Space(int i)
   {
     this.seed = i;
-    this.stars = new ArrayList<Star>();
-    this.planets = new ArrayList<Planet>();
+    this.bodies = new ArrayList<SpaceBody>();
   }
 
   void generate()
@@ -34,41 +32,51 @@ class Space
 
     for (int i = 0; i < size; i++)
     {
-      stars.add(new Star(rand.nextInt(width), rand.nextInt(height), 1));
+      bodies.add(new Star(rand.nextInt(width), rand.nextInt(height), rand.nextInt(TWINKLE) + 1));
     }
 
     for (int i = 0; i < PLANETS; i++)
     {
-      planets.add(new Planet(rand.nextInt(width), rand.nextInt(height), rand.nextInt(10) + 1, color(rand.nextInt(255), rand.nextInt(255), rand.nextInt(255))));
+      bodies.add(new Planet(rand.nextInt(width), rand.nextInt(height), rand.nextInt(10) + 1, color(rand.nextInt(255), rand.nextInt(255), rand.nextInt(255)), rand.nextInt(width), rand.nextInt(height), rand.nextFloat()*0.001F, rand.nextBoolean()));
+    }
+
+    for (int i = 0; i < ASTEROIDS; i++)
+    {
+      bodies.add(new Asteroid(color(45, 45, 45), 10));
+    }
+  }
+
+  void update()
+  {
+    for (SpaceBody body : bodies) 
+    {
+      body.update();
     }
   }
 
   void draw()
   {
     this.drawBackground();
-    this.drawStars();
-    this.drawPlanets();
+    this.drawBodies();
+  }
+
+  boolean isOnScreen(PVector pos)
+  {
+    return pos.x >= 0 && pos.y >= 0 && pos.x < width && pos.y < height;
+  }
+  
+  void drawBodies()
+  {
+    for (SpaceBody asteroid : bodies)
+    {
+      if (isOnScreen(asteroid.pos))
+        asteroid.draw();
+    }
   }
 
   void drawBackground()
   {
     background(0);
-  }
-
-  void drawStars()
-  {
-    for (Star star : stars)
-    {
-      star.draw();
-    }
-  }
-
-  void drawPlanets()
-  {
-    for (Planet planet : planets) 
-    { 
-      planet.draw();
-    }
-  }
+  } 
 }
 
