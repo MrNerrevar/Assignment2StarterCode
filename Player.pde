@@ -12,6 +12,8 @@ class Player
   color colour;
   boolean canShoot = true;
   int shootDelay = 0;
+  float angle = 0;
+  PVector orbitPoint;
 
   Player()
   {
@@ -30,6 +32,15 @@ class Player
     this.start = start;
     this.button1 = button1;
     this.button2 = button2;
+    
+    if (this.index == 0)
+    {
+      this.orbitPoint = new PVector((width/2)+50, (height/2)-170);
+    }
+    else if (this.index == 1)
+    {
+      this.orbitPoint = new PVector((width/2)-50, (height/2)-170);
+    }
   }
 
   Player(int index, color colour, XML xml)
@@ -56,13 +67,17 @@ class Player
     {
       pos.y += 3;
     }
-    if (checkKey(left))
+     if (checkKey(left))
     {
-      pos.x -= 3;
+      angle = 0.01F;
     }    
-    if (checkKey(right))
+    else if (checkKey(right))
     {
-      pos.x += 3;
+      angle = -0.01F;
+    }
+    else
+    {
+      angle = 0; 
     }
     if (checkKey(start))
     {
@@ -85,8 +100,21 @@ class Player
     {
       canShoot = true;
     }
+    
+    rotatePlayer(angle);
   }
 
+  void rotatePlayer(float angle)
+  {
+    stroke(0, 250, 0);
+    ellipse(orbitPoint.x, orbitPoint.y, 10, 10);
+    PVector orbitPointToOrigin = new PVector(-orbitPoint.x, -orbitPoint.y);
+    PVector PosPointToOrigin = PVector.add(pos, orbitPointToOrigin );
+    PosPointToOrigin .rotate(angle);
+    PosPointToOrigin .add(orbitPoint);
+    pos = PosPointToOrigin;
+  }
+  
   void display()
   {    
     stroke(colour);

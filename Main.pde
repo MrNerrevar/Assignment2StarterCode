@@ -12,12 +12,6 @@ ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 
 Space space = new Space(653928);
 
-int centX = width/2;
-int centY = height/2;
-float countInner = 0;
-float countOuter = 0;
-int x, y, z;
-
 void setup()
 {
   size(1000, 750, P2D);
@@ -30,9 +24,6 @@ void draw()
 {
   space.draw();
   println(frameRate);
-  
-  outer_ring();
-  countOuter += 0.15;
 
   //stroke(0, 0, 255);
   //ellipse(500, 300, width-50, height+130);
@@ -110,8 +101,8 @@ void setUpPlayerControllers()
     XML playerXML = children[i];
     Player p = new Player(i, playerColour, playerXML);
     int x = (i + 1) * gap;
-    p.pos.x = x;
-    p.pos.y = 400;
+    p.pos.x = 150 + (700 * i);
+    p.pos.y = 570;
     players.add(p);
   }
 }
