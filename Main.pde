@@ -9,6 +9,7 @@
 ArrayList<Player> players = new ArrayList<Player>();
 boolean[] keys = new boolean[526];
 ArrayList<Bullet> bullets = new ArrayList<Bullet>();
+PVector enemySpawn;
 
 Space space = new Space(653928);
 
@@ -16,6 +17,7 @@ void setup()
 {
   size(1000, 750, P2D);
   smooth();
+  enemySpawn = new PVector(width/2, (height/2)-300);
   space.generate();
   setUpPlayerControllers();
 }
@@ -24,9 +26,9 @@ void draw()
 {
   space.draw();
   println(frameRate);
-
-  //stroke(0, 0, 255);
-  //ellipse(500, 300, width-50, height+130);
+  
+  //stroke(0, 255, 0);  
+  //ellipse(width/2, (height/2)-300, 5, 5);   //Shows enemy spawn point
 
   for (Player player : players)
   {

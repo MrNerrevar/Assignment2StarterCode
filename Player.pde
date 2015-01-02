@@ -32,12 +32,11 @@ class Player
     this.start = start;
     this.button1 = button1;
     this.button2 = button2;
-    
+
     if (this.index == 0)
     {
       this.orbitPoint = new PVector((width/2)+50, (height/2)-170);
-    }
-    else if (this.index == 1)
+    } else if (this.index == 1)
     {
       this.orbitPoint = new PVector((width/2)-50, (height/2)-170);
     }
@@ -67,17 +66,17 @@ class Player
     {
       pos.y += 3;
     }
-     if (checkKey(left))
+    if (checkKey(left) && this.pos.y >= height/2 && this.pos.y <= height-50)
     {
       angle = 0.01F;
-    }    
-    else if (checkKey(right))
+    } 
+    else if (checkKey(right) && this.pos.y >= height/2 && this.pos.y <= height-50)
     {
       angle = -0.01F;
-    }
+    } 
     else
     {
-      angle = 0; 
+      angle = 0;
     }
     if (checkKey(start))
     {
@@ -85,8 +84,8 @@ class Player
     }
     if (checkKey(button1) && canShoot)
     {
-      println("Player " + index + " button 1");
-      bullets.add(new Bullet(pos.x-4, pos.y-50));
+      println("Player " + index + " button 1");  
+      bullets.add(new Bullet(pos.x-4, pos.y-25, getRawAngle(index)));
       canShoot = false;
       shootDelay = 0;
     }
@@ -100,8 +99,30 @@ class Player
     {
       canShoot = true;
     }
-    
+
     rotatePlayer(angle);
+  }
+  
+  float getAngle()
+  {
+    return getAngle(index);
+  }
+ 
+  float getRawAngle(int i)
+  {
+    return (float) ( (Math.atan((enemySpawn.y - pos.y)/(enemySpawn.x - pos.x))) + i*Math.PI );
+  }
+ 
+  float getAngle(int i)
+  {
+    switch(i)
+    {
+    case 0:
+      return (float) (Math.atan((enemySpawn.y - pos.y)/(enemySpawn.x - pos.x)) + Math.PI/2);  
+    case 1:
+      return (float) (Math.atan((enemySpawn.y - pos.y)/(enemySpawn.x - pos.x)) - Math.PI/2);
+    }
+    return 0;
   }
 
   void rotatePlayer(float angle)
@@ -114,7 +135,7 @@ class Player
     PosPointToOrigin .add(orbitPoint);
     pos = PosPointToOrigin;
   }
-  
+
   void display()
   {    
     stroke(colour);
@@ -164,8 +185,9 @@ class Player
     ship.vertex(2, 0);
     ship.endShape(CLOSE);
 
-    ship.translate(pos.x, pos.y-50);
+    ship.translate(pos.x, pos.y-25);
     ship.scale(0.5);
+    ship.rotate(getAngle());
     shape(ship);
 
     //rect(pos.x, pos.y, 20, 20);
