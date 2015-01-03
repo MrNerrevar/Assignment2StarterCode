@@ -10,8 +10,8 @@ ArrayList<Entity> players = new ArrayList<Entity>();
 boolean[] keys = new boolean[526];
 ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 PVector enemySpawn;
-
 Space space = new Space(653928);
+DeathStar deathstar = new DeathStar();
 
 void setup()
 {
@@ -25,6 +25,8 @@ void setup()
 void draw()
 {
   space.draw();
+  
+  deathstar.display();
   
   println(frameRate);
   
