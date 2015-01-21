@@ -1,44 +1,65 @@
 class DeathStar extends Entity
 {
-  
+
   DeathStar()
   {
   }
-  
+
   void update()
   {
+    
   }
-  
+
   void display()
   {
-    PShape deathStar = createShape();
+    PShape deathStar = createShape(GROUP);
+
+    PShape body = createShape();
+    body.beginShape();
+    body.fill(80);
+    body.stroke(70);
+    body.vertex(-4, -28);
+    body.vertex(-10, -26);
+    body.vertex(-18, -21);
+    body.vertex(-22, -16);
+    body.vertex(-25, -11);
+    body.vertex(-27, -6);
+    body.vertex(-28, -4);
+    body.vertex(-28, 4);
+    body.vertex(-27, 6);
+    body.vertex(-25, 11);
+    body.vertex(-22, 16);
+    body.vertex(-18, 21);
+    body.vertex(-10, 26);
+    body.vertex(-4, 28);
+    body.vertex(4, 28);
+    body.vertex(10, 26);
+    body.vertex(18, 21);
+    body.vertex(22, 16);
+    body.vertex(25, 11);
+    body.vertex(27, 6);
+    body.vertex(28, 4);
+    body.vertex(28, -4);
+    body.vertex(27, -6);
+    body.vertex(25, -11);
+    body.vertex(22, -16);
+    body.vertex(18, -21);
+    body.vertex(10, -26);
+    body.vertex(4, -28);
+    body.endShape(CLOSE);
     
-    deathStar.beginShape();
-    deathStar.vertex(-7, 0);
-    deathStar.vertex(-8, 1);
-    deathStar.vertex(-12, 1);
-    deathStar.vertex(-13, 2);
-    deathStar.vertex(-15, 2);
-    deathStar.vertex(-16, 3);
-    deathStar.vertex(-18, 3);
-    deathStar.vertex(-19, 4);
-    deathStar.vertex(-20, 4);
-    deathStar.vertex(-21, 5);
-    deathStar.vertex(-22, 5);
-    deathStar.vertex(-23, 6);
-    deathStar.vertex(-24, 6);
-    deathStar.vertex(-25, 7);
-    deathStar.vertex(-26, 7);
-    deathStar.vertex(-27, 8);
-    deathStar.vertex(-28, 8);
-    deathStar.vertex(-29, 9);
-    deathStar.vertex(-30, 10);
+    PShape contour = createShape(ELLIPSE, 4, -15, 15, 15);
+    /*contour.beginShape();
+    contour.fill(60);
+    contour.endShape(CLOSE);*/
     
-    deathStar.endShape(CLOSE);
-    
+    deathStar.addChild(body);
+    deathStar.addChild(contour);
+
     deathStar.translate(width/2, (height/2)-((height/10)*4));
+    deathStar.scale(2);
     shape(deathStar);
-    
   }
-  
 }
+
+

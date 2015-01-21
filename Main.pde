@@ -38,14 +38,16 @@ void setup()
 void draw()
 {
   space.draw();
+  space.update();
 
   deathstar.display();
+  deathstar.update();
 
   //println(frameRate);
 
   //if(frameRate > 55)
   //{  
-  space.update();
+  
   //}
 
   //stroke(0, 0, 255);
