@@ -8,11 +8,11 @@ class Space
   int seed;
   List<SpaceBody> bodies;
 
-  int START = 40;
-  int SPREAD = 80;
-  int PLANETS = 15;
-  int TWINKLE = 300;
-  int ASTEROIDS = 1;
+  int start = 40;
+  int spread = 80;
+  int planets = 15;
+  int trinkle = 300;
+  int asteroids = 1;
 
   Space()
   {
@@ -28,19 +28,19 @@ class Space
   void generate()
   {
     Random rand = new Random(seed);
-    int size = START + rand.nextInt(SPREAD);
+    int size = start + rand.nextInt(spread);
 
     for (int i = 0; i < size; i++)
     {
-      bodies.add(new Star(rand.nextInt(width), rand.nextInt(height), rand.nextInt(TWINKLE) + 1));
+      bodies.add(new Star(rand.nextInt(width), rand.nextInt(height), rand.nextInt(trinkle) + 1));
     }
 
-    for (int i = 0; i < PLANETS; i++)
+    for (int i = 0; i < planets; i++)
     {
       bodies.add(new Planet(rand.nextInt(width), rand.nextInt(height), rand.nextInt(10) + 1, color(rand.nextInt(255), rand.nextInt(255), rand.nextInt(255)), rand.nextInt(width), rand.nextInt(height), rand.nextFloat()*0.001F, rand.nextBoolean()));
     }
 
-    for (int i = 0; i < ASTEROIDS; i++)
+    for (int i = 0; i < asteroids; i++)
     {
       bodies.add(new Asteroid(color(45, 45, 45), 10));
     }

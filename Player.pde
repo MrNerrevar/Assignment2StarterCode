@@ -61,11 +61,11 @@ class Player extends Entity
     switch(index)
     {
     case 0:
-      leftLimit = this.pos.y < (height/2)+70;
+      leftLimit = this.pos.y < (height/2)+110;
       rightLimit = this.pos.y >= height-50;
       break;
     default:
-      rightLimit = this.pos.y < (height/2)+70;
+      rightLimit = this.pos.y < (height/2)+110;
       leftLimit = this.pos.y >= height-50;
       break;
     }
@@ -100,7 +100,7 @@ class Player extends Entity
     }
 
     shootDelay++;
-    if (shootDelay >= 10) 
+    if (shootDelay >= 15) 
     {
       canShoot = true;
     }

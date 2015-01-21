@@ -13,11 +13,24 @@ PVector enemySpawn;
 Space space = new Space(653928);
 DeathStar deathstar = new DeathStar();
 
+boolean devMode = true;
+boolean sketchFullScreen() 
+{
+  return ! devMode;
+}
+
 void setup()
 {
-  size(1000, 750, P2D);
+  if (devMode)
+  {
+    size(1000, 700, P2D);
+  } else
+  {
+    size(displayWidth, displayHeight, P2D);
+  }
+
   smooth();
-  enemySpawn = new PVector(width/2, (height/2)-300);
+  enemySpawn = new PVector(width/2, (height/2)-((height/10)*4));
   space.generate();
   setUpPlayerControllers();
 }
@@ -25,15 +38,15 @@ void setup()
 void draw()
 {
   space.draw();
-  
+
   deathstar.display();
-  
-  println(frameRate);
-  
-  if(frameRate > 55)
-  {  
-    space.update();
-  }
+
+  //println(frameRate);
+
+  //if(frameRate > 55)
+  //{  
+  space.update();
+  //}
 
   //stroke(0, 0, 255);
   //ellipse(500, 300, width-50, height+130);
@@ -45,17 +58,16 @@ void draw()
   }
 
   Iterator<Bullet> iterator = bullets.iterator();
-  while(iterator.hasNext())
+  while (iterator.hasNext ())
   {    
     Bullet b = iterator.next();
-    if(b.isOnScreen())
+    if (b.isOnScreen())
     {
       b.draw();
-    }
-    else
+    } else
     {
       iterator.remove();
-    } 
+    }
   }
 }
 
@@ -120,8 +132,8 @@ void setUpPlayerControllers()
     XML playerXML = children[i];
     Player p = new Player(i, playerColour, playerXML);
     int x = (i + 1) * gap;
-    p.pos.x = 150 + (700 * i);
-    p.pos.y = 570;
+    p.pos.x = (width*0.15) + ((width*0.7) * i);
+    p.pos.y = (height*0.814);
     players.add(p);
   }
 }

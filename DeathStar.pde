@@ -36,7 +36,7 @@ class DeathStar extends Entity
     
     deathStar.endShape(CLOSE);
     
-    deathStar.translate(width/2, (height/2)-300);
+    deathStar.translate(width/2, (height/2)-((height/10)*4));
     shape(deathStar);
     
   }
