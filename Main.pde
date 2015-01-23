@@ -7,8 +7,9 @@
  */
 
 ArrayList<Entity> players = new ArrayList<Entity>();
-boolean[] keys = new boolean[526];
 ArrayList<Bullet> bullets = new ArrayList<Bullet>();
+ArrayList<Entity> enemies = new ArrayList<Entity>();
+boolean[] keys = new boolean[526];
 PVector enemySpawn;
 Space space = new Space(653928);
 DeathStar deathstar = new DeathStar();
@@ -57,6 +58,12 @@ void draw()
   {
     player.update();
     player.display();
+  }
+  
+  for (Entity enemy : enemies)
+  {
+    enemy.update();
+    enemy.display();
   }
 
   Iterator<Bullet> iterator = bullets.iterator();
@@ -137,6 +144,11 @@ void setUpPlayerControllers()
     p.pos.x = (width*0.15) + ((width*0.7) * i);
     p.pos.y = (height*0.814);
     players.add(p);
+    
+    Enemy e = new Enemy();
+    e.pos.x = width/2;
+    e.pos.y = height/2;
+    enemies.add(e);
   }
 }
 

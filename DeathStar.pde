@@ -12,6 +12,8 @@ class DeathStar extends Entity
 
   void display()
   {
+    fill(60);
+    stroke(55);
     PShape deathStar = createShape(GROUP);
 
     PShape body = createShape();
@@ -56,7 +58,7 @@ class DeathStar extends Entity
     deathStar.addChild(body);
     deathStar.addChild(contour);
 
-    deathStar.translate(width/2, (height/2)-((height/10)*4));
+    deathStar.translate(width/2, (height/2)-(height*0.4));
     deathStar.scale(2);
     shape(deathStar);
   }
