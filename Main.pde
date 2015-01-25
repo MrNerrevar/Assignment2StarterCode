@@ -6,13 +6,13 @@
  See: https://github.com/skooter500/DT228-OOP 
  */
 
-ArrayList<Entity> players = new ArrayList<Entity>();
-ArrayList<Bullet> bullets = new ArrayList<Bullet>();
-ArrayList<Entity> enemies = new ArrayList<Entity>();
+ArrayList<Entity> players;
+ArrayList<Bullet> bullets;
 boolean[] keys = new boolean[526];
-PVector enemySpawn;
-Space space = new Space(653928);
-DeathStar deathstar = new DeathStar();
+PVector ENEMY_SPAWN;
+Space space;
+DeathStar deathstar;
+EnemySpawner spawner;
 
 boolean devMode = true;
 boolean sketchFullScreen() 
@@ -20,8 +20,21 @@ boolean sketchFullScreen()
   return ! devMode;
 }
 
+PVector getEnemySpawn()
+{
+  return new PVector(ENEMY_SPAWN.x, ENEMY_SPAWN.y);
+}
+
 void setup()
 {
+  
+  ENEMY_SPAWN = new PVector(width/2, (height/2)-((height/10)*4));
+  space = new Space(653928);
+  deathstar = new DeathStar();
+  spawner = new EnemySpawner();
+  bullets = new ArrayList<Bullet>();
+  players = new ArrayList<Entity>();
+  
   if (devMode)
   {
     size(1000, 700, P2D);
@@ -31,7 +44,6 @@ void setup()
   }
 
   smooth();
-  enemySpawn = new PVector(width/2, (height/2)-((height/10)*4));
   space.generate();
   setUpPlayerControllers();
 }
@@ -46,25 +58,14 @@ void draw()
 
   //println(frameRate);
 
-  //if(frameRate > 55)
-  //{  
-  
-  //}
-
-  //stroke(0, 0, 255);
-  //ellipse(500, 300, width-50, height+130);
-
   for (Entity player : players)
   {
     player.update();
     player.display();
   }
-  
-  for (Entity enemy : enemies)
-  {
-    enemy.update();
-    enemy.display();
-  }
+
+  spawner.update(players.get(0), getEnemySpawn());
+  spawner.display();
 
   Iterator<Bullet> iterator = bullets.iterator();
   while (iterator.hasNext ())
@@ -125,7 +126,7 @@ void setUpPlayerControllers()
   XML xml = loadXML("arcade.xml");
   XML[] children = xml.getChildren("player");
   int gap = width / (children.length + 1);
-
+ 
   for (int i = 0; i < children.length; i ++)  
   {
     //Condition to define the player colour
@@ -136,19 +137,20 @@ void setUpPlayerControllers()
     {
       playerColour = color(250, 0, 0);
     }
-
-
+ 
+ 
     XML playerXML = children[i];
     Player p = new Player(i, playerColour, playerXML);
-    int x = (i + 1) * gap;
-    p.pos.x = (width*0.15) + ((width*0.7) * i);
-    p.pos.y = (height*0.814);
     players.add(p);
-    
-    Enemy e = new Enemy();
-    e.pos.x = width/2;
-    e.pos.y = height/2;
-    enemies.add(e);
   }
 }
 
+void checkCollision()
+{
+   for(Enemy e : spawner.enemies)
+     for(Bullet b : bullets)
+     {
+       if(e.collided(b))
+        e.isAlive = false; 
+     }
+}

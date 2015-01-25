@@ -12,14 +12,9 @@ class Player extends Entity
   float angle = 0;
   PVector orbitPoint;
 
-  Player()
-  {
-    //pos = new PVector(width / 2, height / 2);
-  }
-
   Player(int index, color colour, char up, char down, char left, char right, char start, char button1, char button2)
   {
-    this();
+    super(new PVector((width*0.15) + ((width*0.7) * index), (height*0.814)));
     this.index = index;
     this.colour = colour;
     this.up = up;
@@ -73,12 +68,10 @@ class Player extends Entity
     if (checkKey(left) && !leftLimit)
     {
       angle = 0.01F;
-    } 
-    else if (checkKey(right) && !rightLimit)
+    } else if (checkKey(right) && !rightLimit)
     {
       angle = -0.01F;
-    } 
-    else
+    } else
     {
       angle = 0;
     }
@@ -100,21 +93,17 @@ class Player extends Entity
     }
 
     shootDelay++;
-    if (shootDelay >= 15) 
+    if (shootDelay >= 50) 
     {
       canShoot = true;
     }
 
-    rotatePlayer(angle);
+    rotateEntity(angle);
   }
 
-  void rotatePlayer(float angle)
+  void rotateEntity(float angle)
   {
-    PVector orbitPointToOrigin = new PVector(-orbitPoint.x, -orbitPoint.y);
-    PVector PosPointToOrigin = PVector.add(pos, orbitPointToOrigin );
-    PosPointToOrigin .rotate(angle);
-    PosPointToOrigin .add(orbitPoint);
-    pos = PosPointToOrigin;
+    rotateEntity(angle, orbitPoint);
   }
 
   float getAngle()
@@ -124,19 +113,12 @@ class Player extends Entity
 
   float getRawAngle(int i)
   {
-    return (float) ( (Math.atan((enemySpawn.y - pos.y)/(enemySpawn.x - pos.x))) + i*Math.PI );
+    return getRawAngle(getEnemySpawn(), i);
   }
 
   float getAngle(int i)
   {
-    switch(i)
-    {
-    case 0:
-      return (float) (Math.atan((enemySpawn.y - pos.y)/(enemySpawn.x - pos.x)) + Math.PI/2);  
-    case 1:
-      return (float) (Math.atan((enemySpawn.y - pos.y)/(enemySpawn.x - pos.x)) - Math.PI/2);
-    }
-    return 0;
+    return getAngle(getEnemySpawn(), i);
   }
 
   void display()

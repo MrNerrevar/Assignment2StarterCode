@@ -1,24 +1,32 @@
 class Enemy extends Entity
 {
-  PVector enemySpawn; 
-  
-  Enemy()
+  PVector playerSpawn;
+  float velocity = 1;
+ 
+  Enemy(PVector pos, PVector spawn)
   {
-    enemySpawn = new PVector(width/2, (height/2)-300);
-  } 
-  
+    super(pos);
+    this.playerSpawn = spawn;
+  }
+   
   void update()
   {
+    PVector direction = PVector.sub(playerSpawn, pos);
+    direction.normalize();
+    direction.mult(velocity);    
+    
+    pos.add(direction);
   }
-  
+
+
   void display()
   {
     PShape fighter = createShape();
-    
+
     fighter.beginShape();
     fighter.fill(80);
     fighter.stroke(60);
-    
+
     fighter.vertex(0, 0);
     fighter.vertex(-4, 0);
     fighter.vertex(-5, 1);
@@ -47,9 +55,9 @@ class Enemy extends Entity
     fighter.vertex(-7, 44);
     fighter.vertex(-4, 44);
     fighter.vertex(-4, 40);
-    
+
     fighter.vertex(0, 40); // Center
-    
+
     fighter.vertex(4, 40);
     fighter.vertex(4, 44);
     fighter.vertex(7, 44);
@@ -78,11 +86,12 @@ class Enemy extends Entity
     fighter.vertex(5, 1);
     fighter.vertex(4, 0);
     fighter.vertex(0, 0);
-    
+
     fighter.endShape(CLOSE);
-    
+
     fighter.translate(pos.x, pos.y);
-    fighter.scale(0.4);
+    fighter.scale(0.35);
     shape(fighter);
   }
 }
+

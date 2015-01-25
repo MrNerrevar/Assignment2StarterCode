@@ -16,36 +16,35 @@ class Asteroid extends SpaceBody
     super.draw();   
     ellipse(pos.x, pos.y, size, size);
   }
-  
+
   void update()
   {
     pos.x = pos.x + (float)(velocity*Math.cos(angle));
     pos.y = pos.y + (float)(velocity*Math.sin(angle));
-    
-    if(hasDied() && new Random().nextInt(50) == 0)
+
+    if (hasDied() && new Random().nextInt(50) == 0)
       regenerate();
   }
-  
+
   boolean hasDied()
   {
-    return (pos.x < 0 || pos.y < 0 || pos.x >= width || pos.y >= height); 
+    return (pos.x < 0 || pos.y < 0 || pos.x >= width || pos.y >= height);
   }
-  
+
   void regenerate()
   {
     Random rand = new Random(); 
-  
-    if(rand.nextFloat() < 0.5F)
+
+    if (rand.nextFloat() < 0.5F)
     {
       pos = new PVector(rand.nextInt(2) * width, rand.nextInt(height));
       angle = rand.nextFloat();
-    }
-    else
+    } else
     {
       pos = new PVector(rand.nextInt(width), rand.nextInt(2) * height);
       angle = -1.0F * rand.nextFloat();
     }    
-    velocity = rand.nextInt(10) + 10;   
+    velocity = rand.nextInt(10) + 10;
   }
 }
 

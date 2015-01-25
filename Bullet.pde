@@ -19,7 +19,7 @@ class Bullet
     pos.x = pos.x + (float)(velocity*Math.cos(angle));
     pos.y = pos.y + (float)(velocity*Math.sin(angle));
   }
-  
+
   boolean isOnScreen()
   {
     return pos.x >= 0 && pos.y >= 0 && pos.x < width && pos.y < height;

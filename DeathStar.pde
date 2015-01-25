@@ -3,11 +3,11 @@ class DeathStar extends Entity
 
   DeathStar()
   {
+    super(new PVector((width/2), (height/2)-(height*0.4)));
   }
 
   void update()
   {
-    
   }
 
   void display()
@@ -49,19 +49,18 @@ class DeathStar extends Entity
     body.vertex(10, -26);
     body.vertex(4, -28);
     body.endShape(CLOSE);
-    
+
     PShape contour = createShape(ELLIPSE, 4, -15, 15, 15);
     /*contour.beginShape();
-    contour.fill(60);
-    contour.endShape(CLOSE);*/
-    
+     contour.fill(60);
+     contour.endShape(CLOSE);*/
+
     deathStar.addChild(body);
     deathStar.addChild(contour);
 
-    deathStar.translate(width/2, (height/2)-(height*0.4));
+    deathStar.translate(pos.x, pos.y);
     deathStar.scale(2);
     shape(deathStar);
   }
 }
-
 

@@ -11,7 +11,7 @@ class Space
   int start = 40;
   int spread = 80;
   int planets = 15;
-  int trinkle = 300;
+  int twinkle = 300;
   int asteroids = 1;
 
   Space()
@@ -32,7 +32,7 @@ class Space
 
     for (int i = 0; i < size; i++)
     {
-      bodies.add(new Star(rand.nextInt(width), rand.nextInt(height), rand.nextInt(trinkle) + 1));
+      bodies.add(new Star(rand.nextInt(width), rand.nextInt(height), rand.nextInt(twinkle) + 1));
     }
 
     for (int i = 0; i < planets; i++)
@@ -64,7 +64,7 @@ class Space
   {
     return pos.x >= 0 && pos.y >= 0 && pos.x < width && pos.y < height;
   }
-  
+
   void drawBodies()
   {
     for (SpaceBody asteroid : bodies)
@@ -77,6 +77,6 @@ class Space
   void drawBackground()
   {
     background(0);
-  } 
+  }
 }
 
