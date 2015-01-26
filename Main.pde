@@ -28,7 +28,7 @@ PVector getEnemySpawn()
 void setup()
 {
   
-  ENEMY_SPAWN = new PVector(width/2, (height/2)-((height/10)*4));
+  ENEMY_SPAWN = new PVector(width/2, (height/2)-((height*0.4)));
   space = new Space(653928);
   deathstar = new DeathStar();
   spawner = new EnemySpawner();

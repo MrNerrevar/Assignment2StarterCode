@@ -5,7 +5,7 @@ void setupScreens()
   splash = loadImage("splash.png");
 }
 
-void displayScreens()
+/*void displayScreens()
 {
   if (splashScreen == true)
   {
@@ -16,7 +16,7 @@ void displayScreens()
   {
     displayMain();
   }
-}
+}*/
 
 void displaySplash()
 {

@@ -27,10 +27,10 @@ class Player extends Entity
 
     if (this.index == 0)
     {
-      this.orbitPoint = new PVector((width/2)+50, (height/2)-170);
+      this.orbitPoint = new PVector((width/2)+50, (height/2)-(height*0.243));
     } else if (this.index == 1)
     {
-      this.orbitPoint = new PVector((width/2)-50, (height/2)-170);
+      this.orbitPoint = new PVector((width/2)-50, (height/2)-(height*0.243));
     }
   }
 
@@ -93,7 +93,7 @@ class Player extends Entity
     }
 
     shootDelay++;
-    if (shootDelay >= 50) 
+    if (shootDelay >= 30) 
     {
       canShoot = true;
     }
@@ -119,6 +119,12 @@ class Player extends Entity
   float getAngle(int i)
   {
     return getAngle(getEnemySpawn(), i);
+  }
+  
+  public boolean collided(Bullet b)
+  {
+    //if (bullet.pos.x
+    return false;
   }
 
   void display()
