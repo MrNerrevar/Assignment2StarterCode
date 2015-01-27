@@ -8,6 +8,12 @@ class Enemy extends Entity
     super(pos);
     this.playerSpawn = spawn;
   }
+  
+  public boolean collided(Bullet b)
+  {
+    //if (
+    return false;
+  }
    
   void update()
   {

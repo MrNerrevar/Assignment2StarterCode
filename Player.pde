@@ -56,12 +56,12 @@ class Player extends Entity
     switch(index)
     {
     case 0:
-      leftLimit = this.pos.y < (height/2)+110;
-      rightLimit = this.pos.y >= height-50;
+      leftLimit = this.pos.y < (height/2)+(height*0.157);
+      rightLimit = this.pos.y >= height-(height*0.07);
       break;
     default:
-      rightLimit = this.pos.y < (height/2)+110;
-      leftLimit = this.pos.y >= height-50;
+      rightLimit = this.pos.y < (height/2)+(height*0.157);
+      leftLimit = this.pos.y >= height-(height*0.07);
       break;
     }
 

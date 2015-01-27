@@ -27,29 +27,37 @@ PVector getEnemySpawn()
 
 void setup()
 {
-  
+  if (devMode)
+  {
+    //size(1000, 700, P2D);
+    size(1280, 1024, P2D);
+  } else
+  {
+    size(displayWidth, displayHeight, P2D);
+  }
+
+  //setupScreens();
+  //displayScreens();
+
+  //if (splashScreen == false)
+  //{
   ENEMY_SPAWN = new PVector(width/2, (height/2)-((height*0.4)));
   space = new Space(653928);
   deathstar = new DeathStar();
   spawner = new EnemySpawner();
   bullets = new ArrayList<Bullet>();
   players = new ArrayList<Entity>();
-  
-  if (devMode)
-  {
-    size(1000, 700, P2D);
-  } else
-  {
-    size(displayWidth, displayHeight, P2D);
-  }
 
   smooth();
   space.generate();
   setUpPlayerControllers();
+  //}
 }
 
 void draw()
 {
+  //if (splashScreen ==  false)
+  //{
   space.draw();
   space.update();
 
@@ -68,7 +76,7 @@ void draw()
   spawner.display();
 
   Iterator<Bullet> iterator = bullets.iterator();
-  while (iterator.hasNext ())
+  whilse (iterator.hasNext ())
   {    
     Bullet b = iterator.next();
     if (b.isOnScreen())
@@ -79,6 +87,7 @@ void draw()
       iterator.remove();
     }
   }
+  //}
 }
 
 void keyPressed()
@@ -126,7 +135,7 @@ void setUpPlayerControllers()
   XML xml = loadXML("arcade.xml");
   XML[] children = xml.getChildren("player");
   int gap = width / (children.length + 1);
- 
+
   for (int i = 0; i < children.length; i ++)  
   {
     //Condition to define the player colour
@@ -137,8 +146,8 @@ void setUpPlayerControllers()
     {
       playerColour = color(250, 0, 0);
     }
- 
- 
+
+
     XML playerXML = children[i];
     Player p = new Player(i, playerColour, playerXML);
     players.add(p);
@@ -147,10 +156,11 @@ void setUpPlayerControllers()
 
 void checkCollision()
 {
-   for(Enemy e : spawner.enemies)
-     for(Bullet b : bullets)
-     {
-       if(e.collided(b))
-        e.isAlive = false; 
-     }
+  for (Enemy e : spawner.enemies)
+    for (Bullet b : bullets)
+    {
+      if (e.collided(b))
+        e.isAlive = false;
+    }
 }
+
