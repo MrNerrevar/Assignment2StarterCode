@@ -14,6 +14,8 @@ Space space;
 DeathStar deathstar;
 EnemySpawner spawner;
 int skipFrame;
+boolean blueWin;
+boolean redWin;
 
 boolean devMode = true;
 boolean sketchFullScreen() 
@@ -34,7 +36,17 @@ void setup()
   } else
   {
     size(displayWidth, displayHeight, P2D);
-  }  
+  } 
+  
+  blueWin = false;
+  redWin = false;
+
+  splashScreen = true;
+  gameScreen = false;
+  gameOverScreen = false;
+
+  setupScreens();
+  setupAudio();
 
   ENEMY_SPAWN = new PVector(width/2, (height/2)-((height*0.4)));
   space = new Space(653928);
@@ -46,13 +58,31 @@ void setup()
   smooth();
   space.generate();
   setUpPlayerControllers();
-  setupAudio();
 }
 
 void draw()
 {
-  space.draw();
+  if (splashScreen == true && gameScreen == false && gameOverScreen == false)
+  {
+    displaySplash();
+  }
 
+  if (gameScreen == true && splashScreen == false && gameOverScreen == false)
+  {
+    clips[3].stop();
+    drawGame();
+  }
+
+  if (gameOverScreen == true && splashScreen == false && gameScreen == false)
+  {
+    displayGameOver();
+  }
+}
+
+void drawGame()
+{
+  space.draw();
+  
   if (skipFrame == 1)
   {
     space.update();
@@ -79,7 +109,7 @@ void draw()
     if (b.isOnScreen())
     {      
       b.draw();
-      if(spawner.bulletCollide(b))
+      if (spawner.bulletCollide(b))
         iterator.remove();
     } else
     {
@@ -94,9 +124,10 @@ void draw()
 void drawScore(Player p)
 {
   fill(p.colour);
-  float w = (p.index == 0) ? width*0.05f : width*0.9f;
+  float w = (p.index == 0) ? width*0.05f : width*0.85f;
   textSize(30);  
-  text(p.score, w, height*0.1F); 
+  text("Score : " + p.score, w, height*0.1f);
+  text("Lives : " + p.lives, w, height*0.2f);
 }
 
 void keyPressed()

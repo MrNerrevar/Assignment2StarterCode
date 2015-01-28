@@ -23,7 +23,7 @@ class EnemySpawner
       Entity e = list.get(i);
       PVector p = new PVector(e.pos.x, e.pos.y);
 
-      if((level = ((Player) e).score/10) > 1)
+      if ((level = ((Player) e).score/10) > 1)
         level(level);
       else
         level(level = 1);
@@ -99,7 +99,22 @@ class EnemySpawner
       {
         flag = true;
         Player player = (Player) p;
-        player.score -= 10;
+        //player.score -= 10;
+        player.lives -=1;
+
+        if (player.lives <= 0)
+        {
+          if (player.index == 0)
+          {
+            redWin = true;
+          } else
+          {
+            blueWin = true;
+          }
+
+          gameOverScreen = true;
+          gameScreen = false;
+        }
       }
     }
     return flag;

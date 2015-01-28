@@ -9,10 +9,12 @@ class Player extends Entity
   char button2;
   int index;
   int shootDelay = 0;
+  int shootCounter = 30;
   float angle = 0;
   PVector orbitPoint;
   PShape ship;
   int score;
+  int lives = 3;
 
   Player(int index, color colour, char up, char down, char left, char right, char start, char button1, char button2)
   {
@@ -98,7 +100,7 @@ class Player extends Entity
     }
 
     shootDelay++;
-    if (shootDelay >= 30) 
+    if (shootDelay >= shootCounter) 
     {
       canShoot = true;
     }

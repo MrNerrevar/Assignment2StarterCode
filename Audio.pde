@@ -6,13 +6,13 @@ import javax.sound.sampled.LineUnavailableException;
 import java.io.IOException;
 
 AudioInputStream[] inputStream = new AudioInputStream[12];
-Clip[] clips = new Clip[2];
+Clip[] clips = new Clip[4];
 String audio[];
 
 void setupAudio()
 {
-  audio = new String[] {"shoot", "explode"};
-  for(int i = 1; i <= 2; i++)
+  audio = new String[] {"shoot", "explode", "imperial", "cantina"};
+  for(int i = 1; i <= 4; i++)
   {
     try
     {
