@@ -13,6 +13,7 @@ PVector ENEMY_SPAWN;
 Space space;
 DeathStar deathstar;
 EnemySpawner spawner;
+int skipFrame;
 
 boolean devMode = true;
 boolean sketchFullScreen() 
@@ -29,65 +30,72 @@ void setup()
 {
   if (devMode)
   {
-    //size(1000, 700, P2D);
-    size(1280, 1024, P2D);
+    size(1000, 700, P2D);
   } else
   {
     size(displayWidth, displayHeight, P2D);
-  }
+  }  
 
-  //setupScreens();
-  //displayScreens();
-
-  //if (splashScreen == false)
-  //{
   ENEMY_SPAWN = new PVector(width/2, (height/2)-((height*0.4)));
   space = new Space(653928);
   deathstar = new DeathStar();
   spawner = new EnemySpawner();
   bullets = new ArrayList<Bullet>();
   players = new ArrayList<Entity>();
-
+  skipFrame = 0;
   smooth();
   space.generate();
   setUpPlayerControllers();
-  //}
 }
 
 void draw()
 {
-  //if (splashScreen ==  false)
-  //{
   space.draw();
-  space.update();
+
+  if (skipFrame == 1)
+  {
+    space.update();
+    skipFrame = 0;
+  }  
 
   deathstar.display();
   deathstar.update();
-
-  //println(frameRate);
 
   for (Entity player : players)
   {
     player.update();
     player.display();
+    drawScore((Player) player);
   }
 
-  spawner.update(players.get(0), getEnemySpawn());
+  spawner.update(players, getEnemySpawn());
   spawner.display();
 
   Iterator<Bullet> iterator = bullets.iterator();
-  whilse (iterator.hasNext ())
+  while (iterator.hasNext ())
   {    
     Bullet b = iterator.next();
     if (b.isOnScreen())
-    {
+    {      
       b.draw();
+      if(spawner.bulletCollide(b))
+        iterator.remove();
     } else
     {
       iterator.remove();
     }
   }
-  //}
+
+  skipFrame++;
+  println(frameRate);
+}
+
+void drawScore(Player p)
+{
+  fill(p.colour);
+  float w = (p.index == 0) ? width*0.05f : width*0.9f;
+  textSize(30);  
+  text(p.score, w, height*0.1F); 
 }
 
 void keyPressed()

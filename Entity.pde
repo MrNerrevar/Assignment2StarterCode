@@ -39,11 +39,8 @@ abstract class Entity
     return (float) ( (Math.atan((pointPos.y - pos.y)/(pointPos.x - pos.x))) + i*Math.PI);
   }
   
-  public boolean collided(Bullet b)
-  {
-    return false;
-  }
-
+  abstract boolean collided(Bullet b);
+  
   abstract void update();
 
   abstract void display();

@@ -3,11 +3,13 @@ class Bullet
   PVector pos;
   float angle;
   int velocity = 5;
+  int index;
 
-  Bullet(float xpos, float ypos, float angle) 
+  Bullet(float xpos, float ypos, float angle, int index) 
   {
     this.pos = new PVector(xpos + velocity, ypos);    
     this.angle = angle;
+    this.index = index;
   }
 
   void draw() 
