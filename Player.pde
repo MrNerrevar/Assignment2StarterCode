@@ -89,6 +89,7 @@ class Player extends Entity
       float yOffset = 25;
 
       bullets.add(new Bullet(pos.x - xOffset, pos.y - yOffset, theta, index));
+      clips[0].loop(1);
       canShoot = false;
       shootDelay = 0;
     }

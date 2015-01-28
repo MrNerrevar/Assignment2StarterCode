@@ -66,6 +66,7 @@ class EnemySpawner
         e.display();
       } else
       {
+        clips[1].loop(1);
         iterator.remove();
       }
     }

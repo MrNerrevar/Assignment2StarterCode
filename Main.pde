@@ -46,6 +46,7 @@ void setup()
   smooth();
   space.generate();
   setUpPlayerControllers();
+  setupAudio();
 }
 
 void draw()
