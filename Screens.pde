@@ -70,7 +70,7 @@ void drawWinningScore(Player p)
   }
   else if (redWin = true)
   {
-    text("Blue Leader Wins", width/2, height*0.6);
+    text("Red Leader Wins", width/2, height*0.6);
   }
   
   fill(p.colour);
